@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>Konfirmasi Pesanan</title>
+    <link rel="icon" href="assets/images/mascot.png" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="site">
+    <header class="site-header site-header--solid" id="site-header">
+      <div class="site-header__left">
+        <button
+          class="site-header__toggle"
+          id="menu-toggle"
+          onclick="toggleMenu()"
+          aria-label="Buka menu"
+          aria-expanded="false"
+          aria-controls="nav-links"
+        >
+          <span
+            class="site-header__toggle-line site-header__toggle-line--top"
+          ></span>
+          <span
+            class="site-header__toggle-line site-header__toggle-line--middle"
+          ></span>
+          <span
+            class="site-header__toggle-line site-header__toggle-line--bottom"
+          ></span>
+        </button>
+        <nav class="site-header__nav" id="nav-links">
+          <a class="site-header__link" href="index.html#menu">Produk</a>
+          <a class="site-header__link" href="index.html#tentang"
+            >Tentang Kami</a
+          >
+          <a
+            class="site-header__link site-header__link--contact"
+            href="index.html#kontak"
+            >Kontak</a
+          >
+        </nav>
+      </div>
+
+      <a class="site-header__logo" href="index.html">
+        <img
+          class="site-header__logo-img"
+          id="logo-img"
+          src="assets/images/logo.png"
+          alt=""
+        />
+      </a>
+
+      <div class="site-header__right">
+        <a class="site-header__contact" href="index.html#kontak">Kontak</a>
+        <button
+          class="site-header__cart"
+          onclick="openCart()"
+          aria-label="Buka keranjang"
+        >
+          Keranjang
+          <span class="site-header__cart-count" id="cart-count"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="page">
+      <a class="back-link" href="index.html#menu">Kembali Ke Produk</a>
+      <h1 class="page__title">Konfirmasi Pesanan</h1>
+
+      <div class="preview__grid" id="preview-content" hidden>
+        <section class="preview__column">
+          <h2 class="preview__heading">Data pengiriman</h2>
+
+          <label class="field">
+            <span class="field__label">Nama pemesan</span>
+            <input
+              class="field__control"
+              type="text"
+              id="orderer-name"
+              placeholder="Contoh: John"
+              autocomplete="name"
+              oninput="updatePreview()"
+            />
+          </label>
+
+          <label class="field">
+            <span class="field__label">Nama penerima</span>
+            <input
+              class="field__control"
+              type="text"
+              id="recipient-name"
+              placeholder="Contoh: Christine"
+              autocomplete="name"
+              oninput="updatePreview()"
+            />
+          </label>
+
+          <label class="field">
+            <span class="field__label">Nomor penerima (WhatsApp/telepon)</span>
+            <input
+              class="field__control"
+              type="tel"
+              id="recipient-phone"
+              inputmode="tel"
+              placeholder="Contoh: 082211449753"
+              autocomplete="tel"
+              oninput="onPhoneInput(this)"
+            />
+          </label>
+
+          <div class="address-field">
+            <label class="field field--flush">
+              <span class="field__label">Alamat penerima</span>
+              <textarea
+                class="field__control field__control--address"
+                id="recipient-address"
+                rows="3"
+                placeholder="Contoh: Jl. Pandanaran No. 12, Semarang"
+                autocomplete="off"
+                oninput="onAddressInput()"
+                onkeydown="onAddressKeydown(event)"
+              ></textarea>
+            </label>
+            <ul
+              class="address-field__suggest"
+              id="address-suggest"
+              role="listbox"
+              hidden
+            ></ul>
+          </div>
+
+          <div class="map-box" id="map-box">
+            <div class="map-box__map" id="map"></div>
+            <div class="map-box__foot">
+              <span class="map-box__note" id="map-note"
+                >Pilih saran alamat atau ketuk peta untuk memasang pin.</span
+              >
+              <button
+                type="button"
+                class="map-box__clear"
+                id="map-clear"
+                onclick="removePin()"
+                hidden
+              >
+                Hapus pin
+              </button>
+            </div>
+          </div>
+
+          <label class="field">
+            <span class="field__label"
+              >Waktu sampai (zona waktu setempat penerima)</span
+            >
+            <input
+              class="field__control field__control--datetime"
+              type="datetime-local"
+              id="arrival-time"
+              oninput="updatePreview()"
+              onchange="updatePreview()"
+            />
+          </label>
+
+          <label class="field">
+            <span class="field__label" id="address-note-label"
+              >Catatan alamat (opsional)</span
+            >
+            <input
+              class="field__control"
+              type="text"
+              id="address-note"
+              placeholder="Contoh: lantai 2"
+              oninput="updatePreview()"
+            />
+          </label>
+
+          <label class="field">
+            <span class="field__label">Catatan produk (opsional)</span>
+            <input
+              class="field__control"
+              type="text"
+              id="product-note"
+              placeholder="Contoh: pesanan OG cube pudding yang rasa vanilla ganti dutch dark cocoa"
+              oninput="updatePreview()"
+            />
+          </label>
+
+          <label class="field">
+            <span class="field__label">Kartu ucapan (opsional)</span>
+            <textarea
+              class="field__control field__control--card"
+              id="greeting-card"
+              rows="3"
+              maxlength="250"
+              placeholder="Contoh: Selamat ulang tahun, Christine! Semoga apa yang dicita-citakan tercapai."
+              oninput="updatePreview()"
+            ></textarea>
+          </label>
+        </section>
+
+        <section class="preview__column">
+          <h2 class="preview__heading">Pesananmu</h2>
+          <ul class="cart-list" id="summary-list"></ul>
+          <div class="total total--summary">
+            <span class="total__label">Total</span>
+            <strong class="total__value" id="summary-total"></strong>
+          </div>
+
+          <label class="field field--message">
+            <span class="field__label">Pesan yang akan dikirim</span>
+            <textarea
+              class="field__control field__control--message"
+              id="message-box"
+              rows="16"
+              readonly
+            ></textarea>
+          </label>
+
+          <p class="form-error" id="form-error" role="alert" hidden></p>
+
+          <button
+            class="btn btn--secondarycolor-1 btn--block"
+            onclick="sendToWhatsApp()"
+          >
+            Kirim pesanan ke WhatsApp
+          </button>
+          <a class="text-link" href="index.html#menu">Kembali ke produk</a>
+        </section>
+      </div>
+
+      <div class="message-page" id="preview-empty" hidden>
+        <div class="message-page__mascot-wrap">
+          <img
+            class="message-page__mascot"
+            src="assets/images/mascot.png"
+            alt=""
+          />
+        </div>
+        <h1 class="message-page__title">Keranjangmu masih kosong</h1>
+        <p class="message-page__text">
+          Pilih pudding favoritmu dulu, lalu kembali ke sini.
+        </p>
+        <a class="btn btn--dark message-page__button" href="index.html#menu"
+          >Lihat katalog</a
+        >
+      </div>
+    </main>
+
+    <footer class="footer" id="kontak">
+      <div class="footer__inner">
+        <div class="footer__column">
+          <h4 class="footer__heading">Cara Pesan</h4>
+          <p class="footer__text" id="footer-order-text"></p>
+        </div>
+        <div class="footer__column">
+          <h4 class="footer__heading">Jam buka</h4>
+          <p class="footer__text" id="footer-hours"></p>
+        </div>
+        <div class="footer__column">
+          <h4 class="footer__heading">Kontak</h4>
+          <p class="footer__text">
+            Instagram: <span id="footer-instagram"></span><br /><span
+              id="footer-city"
+            ></span>
+          </p>
+        </div>
+      </div>
+      <p class="footer__copyright" id="footer-copyright"></p>
+    </footer>
+
+    <div class="backdrop" id="backdrop" onclick="closeAll()"></div>
+
+    <aside class="cart-panel" id="cart-panel" aria-label="Keranjang belanja">
+      <div class="cart-panel__head">
+        <h2 class="cart-panel__title">Keranjang</h2>
+        <button
+          class="cart-panel__close"
+          onclick="closeCart()"
+          aria-label="Tutup keranjang"
+        ></button>
+      </div>
+
+      <div class="cart-panel__body">
+        <div class="cart-panel__empty">
+          <div class="cart-panel__mascot-wrap">
+            <img
+              class="cart-panel__mascot"
+              src="assets/images/mascot.png"
+              alt=""
+            />
+          </div>
+          <p class="cart-panel__empty-text">Keranjangmu masih kosong.</p>
+          <p class="cart-panel__empty-text cart-panel__empty-text--small">
+            Pilih pudding favoritmu dulu ya.
+          </p>
+        </div>
+        <ul class="cart-list" id="cart-list"></ul>
+      </div>
+
+      <div class="cart-panel__footer">
+        <div class="total">
+          <span class="total__label">Total</span>
+          <strong class="total__value" id="cart-total"></strong>
+        </div>
+        <button
+          class="btn btn--secondarycolor-1 btn--block"
+          onclick="closeCart()"
+        >
+          Selesai
+        </button>
+        <button
+          class="cart-panel__clear"
+          type="button"
+          onclick="clearCart(this)"
+        >
+          Kosongkan keranjang
+        </button>
+      </div>
+    </aside>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/preview.js"></script>
+  </body>
+</html>

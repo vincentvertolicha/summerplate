@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>Beranda</title>
+    <link rel="icon" href="assets/images/mascot.png" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="site">
+    <header class="site-header" id="site-header">
+      <div class="site-header__left">
+        <button
+          class="site-header__toggle"
+          id="menu-toggle"
+          onclick="toggleMenu()"
+          aria-label="Buka menu"
+          aria-expanded="false"
+          aria-controls="nav-links"
+        >
+          <span
+            class="site-header__toggle-line site-header__toggle-line--top"
+          ></span>
+          <span
+            class="site-header__toggle-line site-header__toggle-line--middle"
+          ></span>
+          <span
+            class="site-header__toggle-line site-header__toggle-line--bottom"
+          ></span>
+        </button>
+        <nav class="site-header__nav" id="nav-links">
+          <a class="site-header__link" href="#menu" onclick="closeMenu()"
+            >Produk</a
+          >
+          <a class="site-header__link" href="#tentang" onclick="closeMenu()"
+            >Tentang Kami</a
+          >
+          <a
+            class="site-header__link site-header__link--contact"
+            href="#kontak"
+            onclick="closeMenu()"
+            >Kontak</a
+          >
+        </nav>
+      </div>
+
+      <a class="site-header__logo" href="#top">
+        <img
+          class="site-header__logo-img"
+          id="logo-img"
+          src="assets/images/logo.png"
+          alt=""
+        />
+      </a>
+
+      <div class="site-header__right">
+        <a class="site-header__contact" href="#kontak">Kontak</a>
+        <button
+          class="site-header__cart"
+          onclick="openCart()"
+          aria-label="Buka keranjang"
+        >
+          Keranjang
+          <span class="site-header__cart-count" id="cart-count"></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="top">
+        <div class="hero__overlay"></div>
+
+        <div class="hero__content">
+          <p class="eyebrow" id="hero-eyebrow"></p>
+          <h1 class="hero__title">
+            <span id="hero-title-line1"></span><br /><em
+              class="hero__title-accent"
+              id="hero-title-accent"
+            ></em>
+          </h1>
+          <p class="hero__text" id="hero-text"></p>
+          <a
+            class="btn btn--secondarycolor-1"
+            href="#menu"
+            id="hero-button"
+          ></a>
+        </div>
+      </section>
+
+      <section class="catalog" id="menu">
+        <h2 class="catalog__title" id="catalog-title"></h2>
+
+        <div class="filter-bar">
+          <button
+            type="button"
+            class="filter-bar__button btn--secondarycolor-1"
+            onclick="openFilter()"
+            aria-haspopup="dialog"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="M4 7h9M19 7h1M4 17h1M11 17h9" />
+              <circle cx="16" cy="7" r="2.5" />
+              <circle cx="8" cy="17" r="2.5" />
+            </svg>
+            Filter
+            <span class="filter-bar__badge" id="filter-badge" hidden></span>
+          </button>
+          <p class="filter-bar__result" id="filter-result"></p>
+          <button
+            type="button"
+            class="filter-bar__reset"
+            id="filter-reset"
+            onclick="resetFilter()"
+            hidden
+          >
+            Hapus filter
+          </button>
+        </div>
+
+        <div class="catalog__grid" id="product-grid"></div>
+      </section>
+
+      <section class="about" id="tentang">
+        <div class="about__mascot-wrap">
+          <img
+            class="about__mascot"
+            src="assets/images/mascot.png"
+            alt="Maskot"
+          />
+        </div>
+        <div class="about__text">
+          <p class="eyebrow eyebrow--on-maincolor-2" id="about-eyebrow"></p>
+          <h2 class="about__title">
+            <span id="about-title-line1"></span><br /><em
+              class="about__title-accent"
+              id="about-title-accent"
+            ></em>
+          </h2>
+          <p class="about__description" id="about-text"></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" id="kontak">
+      <div class="footer__inner">
+        <div class="footer__column">
+          <h4 class="footer__heading">Cara Pesan</h4>
+          <p class="footer__text" id="footer-order-text"></p>
+        </div>
+        <div class="footer__column">
+          <h4 class="footer__heading">Jam buka</h4>
+          <p class="footer__text" id="footer-hours"></p>
+        </div>
+        <div class="footer__column">
+          <h4 class="footer__heading">Kontak</h4>
+          <p class="footer__text">
+            Instagram: <span id="footer-instagram"></span><br /><span
+              id="footer-city"
+            ></span>
+          </p>
+        </div>
+      </div>
+      <p class="footer__copyright" id="footer-copyright"></p>
+    </footer>
+
+    <div
+      class="filter-backdrop"
+      id="filter-backdrop"
+      onclick="closeFilter()"
+    ></div>
+
+    <div
+      class="filter-panel"
+      id="filter-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="filter-title"
+      tabindex="-1"
+    >
+      <div class="filter-panel__head">
+        <h2 class="filter-panel__title" id="filter-title">Filter</h2>
+        <button
+          type="button"
+          class="filter-panel__close"
+          onclick="closeFilter()"
+          aria-label="Tutup filter"
+        ></button>
+      </div>
+
+      <div class="filter-panel__body">
+        <section class="filter-panel__group">
+          <h3 class="filter-panel__label">Harga</h3>
+          <div class="filter-price">
+            <label class="filter-price__field">
+              <span class="field__label">Minimum (Rp)</span>
+              <input
+                class="field__control"
+                type="text"
+                id="filter-min"
+                inputmode="numeric"
+                autocomplete="off"
+                placeholder="0"
+                oninput="onFilterPriceInput()"
+                onkeydown="onFilterEnter(event)"
+              />
+            </label>
+            <label class="filter-price__field">
+              <span class="field__label">Maksimum (Rp)</span>
+              <input
+                class="field__control"
+                type="text"
+                id="filter-max"
+                inputmode="numeric"
+                autocomplete="off"
+                placeholder="Tanpa batas"
+                oninput="onFilterPriceInput()"
+                onkeydown="onFilterEnter(event)"
+              />
+            </label>
+          </div>
+          <p class="filter-panel__hint" id="filter-range"></p>
+          <p class="form-error" id="filter-error" role="alert" hidden></p>
+        </section>
+        <section class="filter-panel__group" id="filter-category-group">
+          <h3 class="filter-panel__label">Kategori</h3>
+          <div class="filter-chips" id="filter-categories"></div>
+        </section>
+      </div>
+
+      <div class="filter-panel__footer">
+        <button type="button" class="btn btn--outline" onclick="resetDraft()">
+          Reset
+        </button>
+        <button
+          type="button"
+          class="btn btn--secondarycolor-1"
+          id="filter-apply"
+          onclick="applyFilter()"
+        ></button>
+      </div>
+    </div>
+
+    <div class="backdrop" id="backdrop" onclick="closeAll()"></div>
+
+    <aside class="cart-panel" id="cart-panel" aria-label="Keranjang belanja">
+      <div class="cart-panel__head">
+        <h2 class="cart-panel__title">Keranjang</h2>
+        <button
+          class="cart-panel__close"
+          onclick="closeCart()"
+          aria-label="Tutup keranjang"
+        ></button>
+      </div>
+
+      <div class="cart-panel__body">
+        <div class="cart-panel__empty">
+          <div class="cart-panel__mascot-wrap">
+            <img
+              class="cart-panel__mascot"
+              src="assets/images/mascot.png"
+              alt=""
+            />
+          </div>
+          <p class="cart-panel__empty-text">Keranjangmu masih kosong.</p>
+          <p class="cart-panel__empty-text cart-panel__empty-text--small">
+            Pilih pudding favoritmu dulu ya.
+          </p>
+        </div>
+
+        <ul class="cart-list" id="cart-list"></ul>
+      </div>
+
+      <div class="cart-panel__footer">
+        <div class="total">
+          <span class="total__label">Total</span>
+          <strong class="total__value" id="cart-total"></strong>
+        </div>
+        <button
+          class="btn btn--secondarycolor-1 btn--block"
+          onclick="goToPreview()"
+        >
+          Lanjut
+        </button>
+        <button
+          class="cart-panel__clear"
+          type="button"
+          onclick="clearCart(this)"
+        >
+          Kosongkan keranjang
+        </button>
+      </div>
+    </aside>
+
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/home.js"></script>
+  </body>
+</html>

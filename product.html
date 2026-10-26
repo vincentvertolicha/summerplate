@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>Produk</title>
+    <meta name="theme-color" content="#0f2a4a" />
+    <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="icon"
+      href="assets/icons/favicon-32.png"
+      sizes="32x32"
+      type="image/png"
+    />
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="site">
+    <header class="site-header site-header--solid" id="site-header">
+      <div class="site-header__left">
+        <button
+          class="site-header__toggle"
+          id="menu-toggle"
+          onclick="toggleMenu()"
+          aria-label="Buka menu"
+          aria-expanded="false"
+          aria-controls="nav-links"
+        >
+          <span
+            class="site-header__toggle-line site-header__toggle-line--top"
+          ></span>
+          <span
+            class="site-header__toggle-line site-header__toggle-line--middle"
+          ></span>
+          <span
+            class="site-header__toggle-line site-header__toggle-line--bottom"
+          ></span>
+        </button>
+        <nav class="site-header__nav" id="nav-links">
+          <a class="site-header__link" href="index.html#menu">Produk</a>
+          <a class="site-header__link" href="index.html#tentang"
+            >Tentang Kami</a
+          >
+          <a
+            class="site-header__link site-header__link--contact"
+            href="index.html#kontak"
+            >Kontak</a
+          >
+        </nav>
+      </div>
+
+      <a class="site-header__logo" href="index.html">
+        <img
+          class="site-header__logo-img"
+          id="logo-img"
+          src="assets/images/logo.png"
+          alt=""
+        />
+      </a>
+
+      <div class="site-header__right">
+        <a class="site-header__contact" href="index.html#kontak">Kontak</a>
+        <button
+          class="site-header__cart"
+          onclick="openCart()"
+          aria-label="Buka keranjang"
+        >
+          Keranjang
+          <span class="site-header__cart-count" id="cart-count"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="page">
+      <a class="back-link" href="index.html#menu">Kembali ke produk</a>
+
+      <div class="product-page" id="product-page" hidden>
+        <div class="product-page__grid">
+          <div class="gallery product-page__gallery" id="pp-gallery">
+            <div
+              class="gallery__thumbs"
+              id="pp-thumbs"
+              aria-label="Pilih gambar produk"
+            ></div>
+
+            <div class="gallery__visual">
+              <div class="gallery__frame" id="pp-img-box">
+                <img
+                  class="gallery__image"
+                  id="pp-img"
+                  alt=""
+                  decoding="async"
+                />
+
+                <button
+                  class="gallery__arrow gallery__arrow--prev"
+                  onclick="stepImage(-1)"
+                  aria-label="Gambar sebelumnya"
+                ></button>
+                <button
+                  class="gallery__arrow gallery__arrow--next"
+                  onclick="stepImage(1)"
+                  aria-label="Gambar berikutnya"
+                ></button>
+                <span class="gallery__counter" id="pp-counter"></span>
+              </div>
+
+              <p class="promo promo--wrap" id="pp-promo-box" hidden>
+                <span class="promo__text" id="pp-promo"></span>
+              </p>
+            </div>
+          </div>
+
+          <div class="product-page__info">
+            <p class="eyebrow eyebrow--category" id="pp-category"></p>
+            <h1 class="product-page__name" id="pp-name"></h1>
+            <p class="product-page__price" id="pp-price"></p>
+            <p class="product-page__description" id="pp-desc"></p>
+
+            <p class="product-page__label" id="pp-variant-label">
+              Pilih variasi
+            </p>
+
+            <div class="chips" id="pp-chips"></div>
+
+            <div class="product-page__addons" id="pp-addons" hidden>
+              <p class="product-page__label">Tambahan (opsional)</p>
+              <div class="addons" id="pp-addon-list"></div>
+            </div>
+
+            <div class="product-page__actions">
+              <button
+                class="btn btn--secondarycolor-1 btn--block"
+                id="pp-add-btn"
+                onclick="addToCart()"
+              >
+                Tambah ke keranjang
+              </button>
+              <button class="btn btn--outline btn--block" onclick="openCart()">
+                Lihat keranjang
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="message-page" id="not-found" hidden>
+        <div class="message-page__mascot-wrap">
+          <img
+            class="message-page__mascot"
+            src="assets/images/mascot.png"
+            alt=""
+          />
+        </div>
+        <h1 class="message-page__title">Produk tidak ditemukan</h1>
+        <p class="message-page__text">
+          Produk yang kamu cari tidak ada atau sudah tidak dijual.
+        </p>
+        <a class="btn btn--dark message-page__button" href="index.html#menu"
+          >Lihat katalog</a
+        >
+      </div>
+    </main>
+
+    <footer class="footer" id="kontak">
+      <div class="footer__inner">
+        <div class="footer__column">
+          <h4 class="footer__heading">Cara Pesan</h4>
+          <p class="footer__text" id="footer-order-text"></p>
+        </div>
+        <div class="footer__column">
+          <h4 class="footer__heading">Jam buka</h4>
+          <p class="footer__text" id="footer-hours"></p>
+        </div>
+        <div class="footer__column">
+          <h4 class="footer__heading">Kontak</h4>
+          <p class="footer__text">
+            Instagram: <span id="footer-instagram"></span><br /><span
+              id="footer-city"
+            ></span>
+          </p>
+        </div>
+      </div>
+      <p class="footer__copyright" id="footer-copyright"></p>
+    </footer>
+
+    <div class="backdrop" id="backdrop" onclick="closeAll()"></div>
+
+    <aside class="cart-panel" id="cart-panel" aria-label="Keranjang belanja">
+      <div class="cart-panel__head">
+        <h2 class="cart-panel__title">Keranjang</h2>
+        <button
+          class="cart-panel__close"
+          onclick="closeCart()"
+          aria-label="Tutup keranjang"
+        ></button>
+      </div>
+
+      <div class="cart-panel__body">
+        <div class="cart-panel__empty">
+          <div class="cart-panel__mascot-wrap">
+            <img
+              class="cart-panel__mascot"
+              src="assets/images/mascot.png"
+              alt=""
+            />
+          </div>
+          <p class="cart-panel__empty-text">Keranjangmu masih kosong.</p>
+          <p class="cart-panel__empty-text cart-panel__empty-text--small">
+            Pilih pudding favoritmu dulu ya.
+          </p>
+        </div>
+        <ul class="cart-list" id="cart-list"></ul>
+      </div>
+
+      <div class="cart-panel__footer">
+        <div class="total">
+          <span class="total__label">Total</span>
+          <strong class="total__value" id="cart-total"></strong>
+        </div>
+        <button
+          class="btn btn--secondarycolor-1 btn--block"
+          onclick="goToPreview()"
+        >
+          Lanjut
+        </button>
+        <button
+          class="cart-panel__clear"
+          type="button"
+          onclick="clearCart(this)"
+        >
+          Kosongkan keranjang
+        </button>
+      </div>
+    </aside>
+
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/product.js"></script>
+  </body>
+</html>
